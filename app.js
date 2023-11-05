@@ -16,7 +16,9 @@ async function start() {
 function showDataOnWebsite(shiftsList) {
   // document.querySelector("#vacant-shifts-container").innerHTML = "";
   for (const shift of shiftsList) {
-    const vacantShiftsHtml = /*html*/ `<div>Dato for vagt: ${shift.Date} - Start på vagt: ${shift.Time} Længde af vagt: ${shift.LengthOfShift}</div>`;
+    const isoDateString = shift.Date;
+    const date = new Date(isoDateString);
+    const vacantShiftsHtml = /*html*/ `<div>Dato for vagt: <br> ${date}. <br> Start på vagt: <br> ${shift.Time}. <br> Længde af vagt: <br> ${shift.LengthOfShift}</div>`;
     document.querySelector("#vacant-shifts-container").insertAdjacentHTML("beforeend", vacantShiftsHtml);
   }
 }

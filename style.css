@@ -6,4 +6,11 @@ body{
 display: grid;
 grid-template-columns: repeat(3, 1fr);
 font-size: x-large;
+gap: 2%;
+padding: 2%;
+}
+
+#vacant-shifts-container div{
+    border: 1px solid black;
+    border-radius: 1%;
 }
