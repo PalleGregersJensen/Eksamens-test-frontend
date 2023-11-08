@@ -18,7 +18,14 @@ function showDataOnWebsite(shiftsList) {
   for (const shift of shiftsList) {
     const isoDateString = shift.Date;
     const date = new Date(isoDateString);
-    const vacantShiftsHtml = /*html*/ `<div>Dato for vagt: <br> ${date}. <br> Start på vagt: <br> ${shift.Time}. <br> Længde af vagt: <br> ${shift.LengthOfShift}</div>`;
+    const vacantShiftsHtml = /*html*/ `<div id=${isoDateString}>Dato for vagt: <br> ${date}. <br> Start på vagt: <br> ${shift.Time}. <br> Længde af vagt: <br> ${shift.LengthOfShift}</div>`;
     document.querySelector("#vacant-shifts-container").insertAdjacentHTML("beforeend", vacantShiftsHtml);
+
+    document.querySelector("#vacant-shifts-container div:last-child ").addEventListener("click", () => vacantShiftClicked(shift));
   }
+  };
+
+
+function vacantShiftClicked(shiftObject) {
+  console.log(shiftObject);
 }
