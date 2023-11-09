@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="#" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css" />
     <title>Eksamenstest</title>
-</head>
-<body>
-    <h1>Online bookingsystem for vikarer på bosted</h1> 
+  </head>
+  <body>
+    <h1>Online bookingsystem for vikarer på bosted</h1>
     <button id="create-vacant-shift-button">Opret ledig vagt</button>
     <h2>Ledige vagter:</h2>
-    <div id="vacant-shifts-container">
-        
-    </div>
+    <div id="vacant-shifts-container"></div>
+
+    <!-- Book shift dialog -->
+    <dialog id="book-shift-dialog">
+      <form action="" id="book-shift-form" method="dialog">
+        Denne vagt bookes af:
+        <label for="book-shift-input"></label>
+        <input type="text" name="employee" id="book-shift-input" list="book-shift-datalist" />
+        <datalist id="book-shift-datalist"> </datalist>
+      <button type="submit">Book shift</button>
+      </form>
+    </dialog>
 
     <script src="app.js" type="module"></script>
-</body>
+  </body>
 </html>
