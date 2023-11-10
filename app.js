@@ -53,7 +53,7 @@ function vacantShiftClicked(shiftObject) {
       document.querySelector("#book-shift-datalist").insertAdjacentHTML("beforeend", employeeHtml);
       console.log(employeeHtml);
 
-      document.querySelector("#book-shift-form").addEventListener("submit", () => bookSpecificShift(employee));
+      document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
     }
     // document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
   }
@@ -63,15 +63,17 @@ function vacantShiftClicked(shiftObject) {
     event.preventDefault();
     console.log("book shift");
     const form = event.target;
-    console.log(employeeObject);
-    console.log(employeeObject.EmployeeID);
+    const fullName = form.employee.value;
+    console.log(fullName);
     form.reset();
-    const employeeAsJson = JSON.stringify(employeeObject);
+    const employeeAsJson = JSON.stringify({ fullName: fullName });
+    console.log(employeeAsJson);
     const response = await fetch(`${endpoint}/vacant_shifts/${shiftObject.ShiftID}`, {
       method: "PUT",
       body: employeeAsJson,
       headers: {
         "content-Type": "application/json",
+        "credentials": "include",
       },
     });
     if (response.ok) {
