@@ -20,7 +20,7 @@ async function start() {
 
 // Display data on website
 function showDataOnWebsite(shiftsList) {
-  // document.querySelector("#vacant-shifts-container").innerHTML = "";
+  document.querySelector("#vacant-shifts-container").innerHTML = "";
   for (const shift of shiftsList) {
     const isoDateString = shift.Date;
     const date = new Date(isoDateString);
@@ -65,8 +65,10 @@ function vacantShiftClicked(shiftObject) {
     const form = event.target;
     const fullName = form.employee.value;
     console.log(fullName);
+    const foundEmployee = employees.find((employee) => `${employee.FirstName} ${employee.LastName}` === fullName);
+    console.log(foundEmployee);
     form.reset();
-    const employeeAsJson = JSON.stringify({ fullName: fullName });
+    const employeeAsJson = JSON.stringify(foundEmployee);
     console.log(employeeAsJson);
     const response = await fetch(`${endpoint}/vacant_shifts/${shiftObject.ShiftID}`, {
       method: "PUT",
@@ -85,49 +87,5 @@ function vacantShiftClicked(shiftObject) {
 
 
 
-function updateArtistClicked(artistObject) {
-  selectedArtist = artistObject;
-  console.log(selectedArtist);
-  const form = document.querySelector("#form-update-artist");
-  form.image.value = artistObject.image;
-  form.name.value = artistObject.name;
-  form.birthdate.value = artistObject.birthdate;
-  form.elements["active-since"].value = artistObject.activeSince;
-  form.genres.value = artistObject.genres;
-  form.labels.value = artistObject.labels;
-  form.website.value = artistObject.website;
-  form.elements["short-description"].value = artistObject.shortDescription;
-  document.querySelector("#dialog-update-artist").showModal();
-}
 
-async function updateArtist(event) {
-  closeDetailView();
-  console.log("update artist");
-  event.preventDefault();
-  const form = event.target;
-  const name = form.name.value;
-  const birthdate = form.birthdate.value;
-  const activeSince = form.elements["active-since"].value;
-  const image = form.image.value;
-  const genres = form.genres.value;
-  const labels = form.labels.value;
-  const website = form.website.value;
-  const shortDescription = form.elements["short-description"].value;
-  // update user
-  const artistToUpdate = { name, birthdate, activeSince, image, genres, labels, website, shortDescription };
-  console.log(artistToUpdate);
-  console.log(selectedArtist.id);
-  const artistAsJson = JSON.stringify(artistToUpdate);
-  const response = await fetch(`${endpoint}/artists/${selectedArtist.id}`, {
-    method: "PUT",
-    body: artistAsJson,
-    headers: {
-      "content-Type": "application/json",
-    },
-  });
-  if (response.ok) {
-    // if success, run start
-    start();
-  }
-}
 
