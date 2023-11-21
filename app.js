@@ -55,7 +55,7 @@ function vacantShiftClicked(shiftObject) {
 
       document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
     }
-    // document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
+    document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
   }
 
   // book specific shift (update functionality)
