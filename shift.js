@@ -1,3 +1,6 @@
+import { start, bookSpecificShiftAppJs, employees } from "./app.js";
+import { endpoint } from "./rest-api.js";
+
 export default class Shift {
   constructor(Date, Time, LengthOfShift, EmployeeID) {
     this.Date = Date;
@@ -31,21 +34,43 @@ export default class Shift {
       document.querySelector("#book-shift-datalist").insertAdjacentHTML("beforeend", employeeHtml);
       console.log(employeeHtml);
 
-      document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
+      // document.querySelector("#book-shift-form").addEventListener("submit", () => this.bookSpecificShift);
     }
-    document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
   }
   // vacant shift clicked
   vacantShiftClicked(shiftObject) {
     console.log(shiftObject);
+    // console.log(this);
     document.querySelector("#book-shift-dialog").showModal();
+    document.querySelector("#book-shift-form").addEventListener("submit", (event) => bookSpecificShiftAppJs(event, shiftObject));
+    console.log(shiftObject);
   }
 
-  // vacantShiftClicked(shiftObject) {
-  //     console.log(shiftObject);
-  //     // shift.insertEmployeesIntoDatalist(employees);
-  //     // console.log(employees);
-  //     document.querySelector("#book-shift-dialog").showModal();
-
-  // }
+  // book specific shift (update functionality)
+  async bookSpecificShift(event, shiftObject) {
+    event.preventDefault();
+    console.log(this);
+    console.log("book shift");
+    const form = event.target;
+    console.log(form);
+    const fullName = form.employee.value;
+    console.log(fullName);
+    const foundEmployee = employees.find((employee) => `${employee.FirstName} ${employee.LastName}` === fullName);
+    console.log(foundEmployee);
+    form.reset();
+    const employeeAsJson = JSON.stringify(foundEmployee);
+    console.log(employeeAsJson);
+    const response = await fetch(`${endpoint}/vacant_shifts/${shiftObject.ShiftID}`, {
+      method: "PUT",
+      body: employeeAsJson,
+      headers: {
+        "content-Type": "application/json",
+        credentials: "include",
+      },
+    });
+    if (response.ok) {
+      // if success, run start
+      start();
+    }
+  }
 }

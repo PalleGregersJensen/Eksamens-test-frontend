@@ -18,30 +18,15 @@ async function start() {
   console.log(employees);
   shift = new Shift();
   shift.showDataOnWebsite(vacantShifts);
+  // console.log(shift);
 }
 
-// book specific shift (update functionality)
-async function bookSpecificShift(employeeObject) {
+// Tilføj denne funktion for at definere bookSpecificShift i din app.js
+function bookSpecificShiftAppJs(event, shiftObject) {
   event.preventDefault();
-  console.log("book shift");
-  const form = event.target;
-  const fullName = form.employee.value;
-  console.log(fullName);
-  const foundEmployee = employees.find((employee) => `${employee.FirstName} ${employee.LastName}` === fullName);
-  console.log(foundEmployee);
-  form.reset();
-  const employeeAsJson = JSON.stringify(foundEmployee);
-  console.log(employeeAsJson);
-  const response = await fetch(`${endpoint}/vacant_shifts/${shiftObject.ShiftID}`, {
-    method: "PUT",
-    body: employeeAsJson,
-    headers: {
-      "content-Type": "application/json",
-      credentials: "include",
-    },
-  });
-  if (response.ok) {
-    // if success, run start
-    start();
-  }
+  console.log(event);
+  console.log(shiftObject);
+  shift.bookSpecificShift(event, shiftObject);
 }
+
+export { start, bookSpecificShiftAppJs, employees };
