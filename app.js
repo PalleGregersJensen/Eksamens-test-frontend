@@ -70,20 +70,20 @@ function vacantShiftClicked(shiftObject) {
       (employee) => `${employee.FirstName} ${employee.LastName}` === fullName);
     console.log(foundEmployee);
     form.reset();
-    // const employeeAsJson = JSON.stringify(employeeObject);
-    // console.log(employeeAsJson);
-    // const response = await fetch(`${endpoint}/vacant_shifts/${shiftObject.ShiftID}`, {
-    //   method: "PUT",
-    //   body: employeeAsJson,
-    //   headers: {
-    //     "content-Type": "application/json",
-    //     credentials: "include",
-    //   },
-    // });
-    // if (response.ok) {
-    //   // if success, run start
-    //   start();
-    // }
+    const employeeAsJson = JSON.stringify(employeeObject);
+    console.log(employeeAsJson);
+    const response = await fetch(`${endpoint}/vacant_shifts/${shiftObject.ShiftID}`, {
+      method: "PUT",
+      body: employeeAsJson,
+      headers: {
+        "content-Type": "application/json",
+        credentials: "include",
+      },
+    });
+    if (response.ok) {
+      // if success, run start
+      start();
+    }
   }
 }
 
