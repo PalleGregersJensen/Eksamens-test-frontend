@@ -53,19 +53,20 @@ function vacantShiftClicked(shiftObject) {
       document.querySelector("#book-shift-datalist").insertAdjacentHTML("beforeend", employeeHtml);
       console.log(employeeHtml);
 
-      document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
+      document.querySelector("#book-shift-form").addEventListener("submit", ()=> bookSpecificShift(employee));
     }
-    document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
+    // document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
   }
 
   // book specific shift (update functionality)
   async function bookSpecificShift(employeeObject) {
     event.preventDefault();
     console.log("book shift");
+    console.log(employeeObject);
     const form = event.target;
-    const fullName = form.employee.value;
-    console.log(fullName);
-    const foundEmployee = employees.find((employee) => `${employee.FirstName} ${employee.LastName}` === fullName);
+    // const fullName = form.employee.value;
+    // console.log(fullName);
+    const foundEmployee = employees.find((employee) => employee.EmployeeID === employeeObject.EmployeeID);
     console.log(foundEmployee);
     form.reset();
     const employeeAsJson = JSON.stringify(foundEmployee);
@@ -75,7 +76,7 @@ function vacantShiftClicked(shiftObject) {
       body: employeeAsJson,
       headers: {
         "content-Type": "application/json",
-        "credentials": "include",
+        credentials: "include",
       },
     });
     if (response.ok) {
@@ -84,8 +85,4 @@ function vacantShiftClicked(shiftObject) {
     }
   }
 }
-
-
-
-
 
