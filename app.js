@@ -53,36 +53,37 @@ function vacantShiftClicked(shiftObject) {
       document.querySelector("#book-shift-datalist").insertAdjacentHTML("beforeend", employeeHtml);
       console.log(employeeHtml);
 
-      document.querySelector("#book-shift-form").addEventListener("submit", ()=> bookSpecificShift(employee));
+      document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
     }
     // document.querySelector("#book-shift-form").addEventListener("submit", bookSpecificShift);
   }
 
   // book specific shift (update functionality)
-  async function bookSpecificShift(employeeObject) {
+  async function bookSpecificShift() {
     event.preventDefault();
     console.log("book shift");
-    console.log(employeeObject);
+    // console.log(employeeObject);
     const form = event.target;
-    // const fullName = form.employee.value;
-    // console.log(fullName);
-    const foundEmployee = employees.find((employee) => employee.EmployeeID === employeeObject.EmployeeID);
+    const fullName = form.employee.value;
+    console.log(fullName);
+    const foundEmployee = employees.find(
+      (employee) => `${employee.FirstName} ${employee.LastName}` === fullName);
     console.log(foundEmployee);
     form.reset();
-    const employeeAsJson = JSON.stringify(foundEmployee);
-    console.log(employeeAsJson);
-    const response = await fetch(`${endpoint}/vacant_shifts/${shiftObject.ShiftID}`, {
-      method: "PUT",
-      body: employeeAsJson,
-      headers: {
-        "content-Type": "application/json",
-        credentials: "include",
-      },
-    });
-    if (response.ok) {
-      // if success, run start
-      start();
-    }
+    // const employeeAsJson = JSON.stringify(employeeObject);
+    // console.log(employeeAsJson);
+    // const response = await fetch(`${endpoint}/vacant_shifts/${shiftObject.ShiftID}`, {
+    //   method: "PUT",
+    //   body: employeeAsJson,
+    //   headers: {
+    //     "content-Type": "application/json",
+    //     credentials: "include",
+    //   },
+    // });
+    // if (response.ok) {
+    //   // if success, run start
+    //   start();
+    // }
   }
 }
 
